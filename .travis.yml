@@ -24,7 +24,6 @@ script:
 deploy:
   provider: releases
   file_glob: true
-  user: "shreyaganguly1"
-  password: "shreya99"
+  api_key: 976cc6e54aeea1446f4d1f30e0ad2401c9b00bcf
   file: travisiOSsample-iOS-*.tar.gz
   skip_cleanup: true
