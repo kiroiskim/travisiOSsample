@@ -12,7 +12,7 @@ script:
   - cp -R $BUILD_DIR/Release-iphoneos/travisiOSsample.framework $UNIVERSAL_OUTPUTFOLDER/
   - cp -R $BUILD_DIR/Release-iphonesimulator/travisiOSsample.framework/Modules/travisiOSsample.swiftmodule/. $UNIVERSAL_OUTPUTFOLDER/travisiOSsample.framework/Modules/travisiOSsample.swiftmodule
   - lipo -create -output $UNIVERSAL_OUTPUTFOLDER/travisiOSsample.framework/travisiOSsample $BUILD_DIR/Release-iphonesimulator/travisiOSsample.framework/travisiOSsample $BUILD_DIR/Release-iphoneos/travisiOSsample.framework/travisiOSsample
-  - mv $UNIVERSAL_OUTPUTFOLDER/travisiOSsample.framework $PROJECT_DIR
+  - mv $UNIVERSAL_OUTPUTFOLDER/travisiOSsample.framework .
   - tar -cvzf travisiOSsample-iOS.tar.gz travisiOSsample.framework
   - rm -rf travisiOSsample.framework
 
