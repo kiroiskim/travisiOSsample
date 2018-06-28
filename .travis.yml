@@ -28,5 +28,3 @@ deploy:
   password: "shreya99"
   file: travisiOSsample-iOS-*.tar.gz
   skip_cleanup: true
-  on:
-    repo: shreyaganguly1/helloworld
