@@ -3,13 +3,24 @@ osx_image: xcode9.3
 branches:
   only:
   - master
+env:
+  - UNIVERSAL_OUTPUTFOLDER=universal BUILD_DIR=travisiOSsample-distributable
 script:
-- echo $TRAVIS_BUILD_DIR > VERSION
+  - mkdir -p $UNIVERSAL_OUTPUTFOLDER
+  - xcodebuild -target "travisiOSsample" -configuration Release ONLY_ACTIVE_ARCH=NO -sdk iphoneos  BUILD_DIR=$BUILD_DIR clean build
+  -	xcodebuild -target "travisiOSsample" -configuration Release -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO BUILD_DIR=$BUILD_DIR clean build
+  -	cp -R $BUILD_DIR/Release-iphoneos/travisiOSsample.framework $UNIVERSAL_OUTPUTFOLDER/
+  -	cp -R $BUILD_DIR/Release-iphonesimulator/travisiOSsample.framework/Modules/travisiOSsample.swiftmodule/. $UNIVERSAL_OUTPUTFOLDER/travisiOSsample.framework/Modules/travisiOSsample.swiftmodule
+  -	lipo -create -output $UNIVERSAL_OUTPUTFOLDER/travisiOSsample.framework/travisiOSsample $BUILD_DIR/Release-iphonesimulator/travisiOSsample.framework/travisiOSsample $BUILD_DIR/Release-iphoneos/travisiOSsample.framework/travisiOSsample
+  -	mv $UNIVERSAL_OUTPUTFOLDER/travisiOSsample.framework $PROJECT_DIR
+  -	tar -cvzf travisiOSsample-iOS.tar.gz travisiOSsample.framework
+  -	rm -rf travisiOSsample.framework
+
 deploy:
   provider: releases
   api_key:
     secure: x56TqQWFOuNdVikMyp19HjJUXu6D1pK0d8SE95yCTwAQ9liP9wAA2Yahxuss9+ImqFxRyJXE4ptcgXG6KfwB+XGILNh5eXNQKe2RAOeGZVFOLKH/kdzkr67+kbU9XnoD3dSSColrE/fqN/8/vf7FAgrvFnZ97yDsMeKKl+mngI9pNAm8Xb38VkcA3CStskQmsIYxzcA0Vbg/sGShtca+bRIlgxFbrvgwbUArYu4SbpX8zoHp+OOjLyd3v9lfu4GPy8nBKi8phiz28GgrE6rN1Txs8O4GhYzdtk3FGxbqZ9u4ucmNKnexP4AgX3mdxCrgkO1OBOT4VwLtLHZFu/hRT+dOU3+nGp7oA9caYPGvj4zx84RCkkfU02f1iumTSCw3h6IHgH7UYdOH74goqfL9Dk/ZfJ2tF4+FJsT9kkbQ17kmnO+GowV1x+NtdVB7ve3kgg4fP1MeUtC5+2CFUpU9CQkb5SyaLMP1NCQ93zfEAhktoyxK9iqeJu6nI62n/xKv9+xn/AWpHFcNtfmBuYFziA/tPD2atwRoyYqOFaWaK6ALQV2qmt4Ht5n36kNQLbuqZr3Gg5MvqFHUSYeEwdc08F/3M3v0nvTr4OOIn1+828stSgYxY1Ge+VY2hVkSqzsJExieVI4dqQ1razeqveFVMuwx79xM/FkNxtS5LcLZ8y8=
-  file: VERSION
-  skip_cleanup: true  
+  file: travisiOSsample-iOS.tar.gz
+  skip_cleanup: true
   on:
     repo: shreyaganguly/travisiOSsample
