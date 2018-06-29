@@ -27,4 +27,4 @@ script:
   - mv travisiOSsample-iOS-*.tar.gz releases/
 
 after_script:
-  - ghr v1.9.0 releases/ -t d8c24d45ce5d9f8138dc916a5c0bb099e73dbae3 -u shreyaganguly1 -r helloworld -c master
+  - ghr -t d8c24d45ce5d9f8138dc916a5c0bb099e73dbae3 -u shreyaganguly1 -r helloworld -c master v1.9.0 releases/
