@@ -8,7 +8,7 @@ release:
 	cp -R $(BUILD_DIR)/Release-iphonesimulator/travisiOSsample.framework/Modules/travisiOSsample.swiftmodule/. $(UNIVERSAL_OUTPUTFOLDER)/travisiOSsample.framework/Modules/travisiOSsample.swiftmodule
 	lipo -create -output $(UNIVERSAL_OUTPUTFOLDER)/travisiOSsample.framework/travisiOSsample $(BUILD_DIR)/Release-iphonesimulator/travisiOSsample.framework/travisiOSsample $(BUILD_DIR)/Release-iphoneos/travisiOSsample.framework/travisiOSsample
 	mv $(UNIVERSAL_OUTPUTFOLDER)/travisiOSsample.framework .
-	cat $(COMMIT) > COMMIT
+	@echo $(COMMIT) > COMMIT
 	tar -cvzf travisiOSsample-iOS-$(XCODE_VER)-$(VERSION).tar.gz travisiOSsample.framework VERSION COMMIT
 	mkdir releases
 	mv travisiOSsample-iOS-*.tar.gz releases/
