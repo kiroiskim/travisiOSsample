@@ -31,4 +31,4 @@ script:
 - mkdir releases
 - mv travisiOSsample-iOS-*.tar.gz releases/
 after_script:
-- ghr -t $TOKEN -u shreyaganguly1 -r travisRelease -c master $tag releases/
+- ghr -t $TOKEN -u shreyaganguly1 -r travisRelease -c master -b "Releasing $tag" $tag releases/
