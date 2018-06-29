@@ -30,6 +30,5 @@ script:
 - tar -cvzf travisiOSsample-iOS-$XCODE_VER.tar.gz travisiOSsample.framework
 - mkdir releases
 - mv travisiOSsample-iOS-*.tar.gz releases/
-deploy:
-  provider: script
-  script: ghr -t $TOKEN -u shreyaganguly1 -r travisRelease -c master $tag releases/
+after_script:
+- ghr -t $TOKEN -u shreyaganguly1 -r travisRelease -c master $tag releases/
