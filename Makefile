@@ -1,5 +1,7 @@
 VERSION = $(shell cat VERSION)
 COMMIT = $(shell git rev-parse HEAD)
+UNIVERSAL_OUTPUTFOLDER = universal
+BUILD_DIR = travisiOSsample-distributable
 release:
 	mkdir -p $(UNIVERSAL_OUTPUTFOLDER)
 	xcodebuild -target "travisiOSsample" -configuration Release ONLY_ACTIVE_ARCH=NO -sdk iphoneos  BUILD_DIR=$(BUILD_DIR) clean build
