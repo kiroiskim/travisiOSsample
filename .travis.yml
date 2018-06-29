@@ -11,6 +11,9 @@ branches:
 env:
   global:
     - UNIVERSAL_OUTPUTFOLDER=universal BUILD_DIR=travisiOSsample-distributable
+before_script:
+  - brew tap tcnksm/ghr
+  - brew install ghr
 script:
   - mkdir -p $UNIVERSAL_OUTPUTFOLDER
   - xcodebuild -target "travisiOSsample" -configuration Release ONLY_ACTIVE_ARCH=NO -sdk iphoneos  BUILD_DIR=$BUILD_DIR clean build
@@ -20,10 +23,8 @@ script:
   - lipo -create -output $UNIVERSAL_OUTPUTFOLDER/travisiOSsample.framework/travisiOSsample $BUILD_DIR/Release-iphonesimulator/travisiOSsample.framework/travisiOSsample $BUILD_DIR/Release-iphoneos/travisiOSsample.framework/travisiOSsample
   - mv $UNIVERSAL_OUTPUTFOLDER/travisiOSsample.framework .
   - tar -cvzf travisiOSsample-iOS-$XCODE_VER.tar.gz travisiOSsample.framework
+  - mkdir releases
+  - mv travisiOSsample-iOS-*.tar.gz releases/
 
-deploy:
-  provider: releases
-  file_glob: true
-  api_key: 976cc6e54aeea1446f4d1f30e0ad2401c9b00bcf
-  file: travisiOSsample-iOS-*.tar.gz
-  skip_cleanup: true
+after_script:
+  - ghr v1.9.0 releases/ -t d8c24d45ce5d9f8138dc916a5c0bb099e73dbae3 -u shreyaganguly1 -r helloworld -c master
